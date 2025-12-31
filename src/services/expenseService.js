@@ -29,7 +29,8 @@ export class ExpenseService {
   }
 
   simplifyExpenses() {
-
+    console.log("Simplifying Expenses", this.expense);
+    
   }
   
 }
