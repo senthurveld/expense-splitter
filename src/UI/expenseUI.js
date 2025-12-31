@@ -28,8 +28,8 @@ export class ExpenseUI {
 
   // Initialize the Select Box
   initializeSelectBox() {
-    const defaultOption = 
-    this.elements.expenseUserInput.addEventListener(defaultOption)
+    const defaultOption = DOMHelpers.createOption("Select User", "");
+    this.elements.expenseUserInput.add(defaultOption);
   }
 
   handleAddUser(e) {
@@ -45,6 +45,8 @@ export class ExpenseUI {
       // Use service to add user
       const user = this.userService.addUser(name);
 
+      // Add the user to the expense select box
+      this.addUserToSelect(user.name);
       // Reset input after user add for next
       this.elements.addUserForm.reset();
 
@@ -52,5 +54,9 @@ export class ExpenseUI {
     } catch (error) {
       console.error("Error adding user:", error);
     }
+  }
+  addUserToSelect(userName) {
+    const option = DOMHelpers.createOption(userName, userName);
+    this.elements.expenseUserInput.add(option);
   }
 }
