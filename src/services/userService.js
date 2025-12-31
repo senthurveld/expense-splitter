@@ -35,7 +35,7 @@ export class UserService {
   }
 
   getUserCount() {
-    return this.users.size();
+    return this.users.size;
   }
 
   clear() {
