@@ -21,7 +21,14 @@ class ExpenseApp {
 
 let expenseApp;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  expenseApp = new ExpenseApp();
+  expenseApp.init();
+});
+
+window.addEventListener("load", () => {
+  if (!expenseApp) {
     expenseApp = new ExpenseApp();
     expenseApp.init();
-})
+  }
+});

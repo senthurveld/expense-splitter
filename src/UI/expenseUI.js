@@ -1,5 +1,5 @@
 import { DOMHelpers } from "./DOMHelpers.js";
-
+import { showSuccessToast, showErrorToast } from "../utils/toastUtil.js";
 export class ExpenseUI {
   constructor(userService, expenseSerive) {
     this.userService = userService;
@@ -39,7 +39,7 @@ export class ExpenseUI {
       // Get value by services
       const name = this.elements.userInput.value.trim();
       if (!name) {
-        throw new Error("User name is mad=ndatory");
+        throw new Error("User name is mandatory");
       }
 
       // Use service to add user
@@ -50,8 +50,9 @@ export class ExpenseUI {
       // Reset input after user add for next
       this.elements.addUserForm.reset();
 
-      console.log(`User ${user.name} added`);
+      showSuccessToast(`User ${user.name} added`);
     } catch (error) {
+      showErrorToast( error);
       console.error("Error adding user:", error);
     }
   }
