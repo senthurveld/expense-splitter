@@ -1,4 +1,4 @@
-import { User } from "../models/user.js";
+import { User } from "../models/user";
 
 export class UserService {
   constructor() {
@@ -9,12 +9,14 @@ export class UserService {
     if (!name) {
       throw new Error("User name is required");
     }
+
     const trimmedName = name.trim();
     if (this.users.has(trimmedName)) {
-      throw new Error("User already exists!");
+      throw new Error("User already exists");
     }
-    const user = new User(name);
-    this.users.set(name, user);
+
+    const user = new User(trimmedName);
+    this.users.set(trimmedName, user);
     return user;
   }
 
@@ -26,7 +28,7 @@ export class UserService {
     return Array.from(this.users.values());
   }
 
-  getUserName() {
+  getUserNames() {
     return Array.from(this.users.keys());
   }
 
@@ -39,6 +41,18 @@ export class UserService {
   }
 
   clear() {
-    return this.users.clear;
+    this.users.clear();
+  }
+
+  importUsers(userData) {
+    if (!Array.isArray(userData)) {
+      throw new Error("User data must be an array");
+    }
+
+    userData.forEach((userData) => {
+      if (userData && userData.name) {
+        this.users.set(userData.name, new User(userData.name));
+      }
+    });
   }
 }

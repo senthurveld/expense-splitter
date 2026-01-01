@@ -19,7 +19,7 @@ export function showErrorToast(message) {
     position: "right",
     stopOnFocus: true,
     style: {
-      background: "tomato",
+      background: "linear-gradient(to right, #8B0000, #FFCCCB)",
     },
   }).showToast();
 }

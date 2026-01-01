@@ -10,4 +10,11 @@ export class User {
   generateId() {
     return crypto.randomUUID();
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+    };
+  }
 }

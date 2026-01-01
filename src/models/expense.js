@@ -15,4 +15,14 @@ export class Expense {
   generateId() {
     return crypto.randomUUID();
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      paidBy: this.paidBy,
+      amount: this.amount,
+      description: this.description,
+      timestamp: this.timestamp,
+    };
+  }
 }

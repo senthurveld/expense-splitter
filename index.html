@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Expense Splitter App</title>
+  <link rel="icon" type="image/png" href="icon.png" />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link href="/src/index.css" rel="stylesheet" />
   <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -16,8 +17,8 @@
     <!-- header -->
     <header class="flex flex-col md:flex-row justify-between items-center mb-12">
       <div class="text-center md:text-left mb-6 md:mb-8">
-        <h1 class="text-6xl md:text-7xl font-bold text-white mb-2 tracking-tight">
-          <span class="inline-block">💸</span> Splitter
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
+          <span class="inline-block">💷</span> Splitter
         </h1>
         <p class="text-xl text-purple-100 font-light">
           Split money with friends easily!
@@ -25,66 +26,104 @@
       </div>
       <!-- Navbar -->
       <nav class="flex gap-3">
-        <button
-          class="btn-hover bg-yellow-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg">Export</button>
-        <button
-          class="btn-hover bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg">Import</button>
+        <input type="file" id="importFile" class="hidden" accept=".json" />
+        <button id="exportBtn"
+          class="btn-hover bg-yellow-400 hover:bg-yellow-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg">
+          <span class="flex items-center gap-2">
+            <i data-lucide="file-up"></i>
+            Export
+          </span>
+        </button>
+        <button id="importBtn"
+          class="btn-hover bg-blue-400 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg">
+          <span class="flex items-center gap-2">
+            <i data-lucide="file-down"></i>
+            Import
+          </span>
+        </button>
       </nav>
     </header>
 
-    <!-- Add user form -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-      <form id="addUserForm" class="glass-effect p-8 rounded-2xl card-shadow">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Add Users</h2>
-        <div class="space-y-4">
-          <input type="text" id="userInput" class="w-full border-2 
-          border-gray-200 focus:border-blue-500 p-4 rounded-xl 
-          text-lg outline-none" placeholder="Enter Username">
-          <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600
-                    text-white px-6 py-4 rounded-xl font-semibold text-lg">Add User</button>
-        </div>
-      </form>
+      <!-- Add User Form -->
+      <div class="animate-fade-in">
+        <form id="addUserForm" class="glass-effect p-8 rounded-2xl card-shadow">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+              <i data-lucide="users" class="text-white"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800">Add Users</h2>
+          </div>
+
+          <div class="space-y-4">
+            <div class="floating-label">
+              <input type="text" id="userInput" placeholder=" "
+                class="input-focus w-full border-2 border-gray-200 focus:border-blue-500 p-4 rounded-xl text-lg outline-none" />
+              <label>Enter user name</label>
+            </div>
+            <button type="submit"
+              class="btn-hover w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 rounded-xl font-semibold text-lg shadow-lg">
+              <span class="flex items-center justify-center gap-2">
+                <i data-lucide="plus"></i>
+                Add User
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
 
       <!-- Add Expense Form -->
-      <form id="addExpenseForm" class="glass-effect p-8 rounded-2xl card-shadow">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Add Expense</h2>
-        <div class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <!-- User who paid -->
-            <div>
-              <label for="" class="block text-sm font-medium text-gray-700 mb-2">Who paid?</label>
-              <select name="" id="expenseUserInput" class="w-full border-2 
-                    border-gray-200 focus:border-blue-500 p-4 rounded-xl 
-                    text-lg outline-none bg-white"></select>
+      <div class="animate-fade-in">
+        <form id="addExpenseForm" class="glass-effect p-8 rounded-2xl card-shadow">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+              <i data-lucide="indian-rupee" class="text-white"></i>
             </div>
-            <!-- Amount  -->
-            <div>
-              <label for="" class="block text-sm font-medium text-gray-700 mb-2">Amount (₹)</label>
-              <input type="number" id="expenseAmountInput" class="w-full border-2 
-          border-gray-200 focus:border-blue-500 p-4 rounded-xl 
-          text-lg outline-none" min="0" step="0.01" placeholder="Enter Amount">
-            </div>
-            <!-- description -->
-            <div>
-              <label for="" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-              <input type="text" id="expenseDescription" class="w-full border-2 
-                  border-gray-200 focus:border-blue-500 p-4 rounded-xl 
-                  text-lg outline-none" placeholder="Enter Description">
-            </div>
+            <h2 class="text-3xl font-bold text-gray-800">Add Expenses</h2>
           </div>
-          <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 
-                text-white px-6 py-4 rounded-xl font-semibold 
-                  text-lg">Add Expense</button>
-      </form>
+
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mobile-responsive">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Who Paid?</label>
+                <select id="expenseUserInput"
+                  class="input-focus w-full border-2 border-gray-200 focus:border-green-500 p-4 rounded-xl text-lg outline-none bg-white">
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Amount (₹)</label>
+                <input type="number" id="expenseAmountInput" placeholder="e.g. 100"
+                  class="input-focus w-full border-2 border-gray-200 focus:border-green-500 p-4 rounded-xl text-lg outline-none"
+                  min="0" step="0.01" />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <input type="text" id="expenseReasonInput" placeholder="e.g. Ice Cream"
+                  class="input-focus w-full border-2 border-gray-200 focus:border-green-500 p-4 rounded-xl text-lg outline-none" />
+              </div>
+            </div>
+
+            <button type="submit"
+              class="btn-hover w-full bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-semibold text-lg shadow-lg">
+              <span class="flex items-center justify-center gap-2">
+                <i data-lucide="plus"></i>
+                Add Expense
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <!-- Expenses Overview -->
-  <div id="renderExpenses" class="glass-effect p-8 rounded-2xl card-shadow animate-fade-in">
+  <div id="renderExpenses" class=" max-w-11/12 glass-effect p-8 rounded-2xl card-shadow animate-fade-in m-auto">
     <div class="flex items-center gap-3 mb-8">
       <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
         <i data-lucide="calculator" class="text-white"></i>
       </div>
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">Expense Overview</h2>
+      <h2 class="text-3xl font-bold text-gray-800">Expense Overview</h2>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -94,7 +133,7 @@
           <i data-lucide="clipboard-list"></i>
           All Payments
         </h3>
-        <div class="bg-gray-50 border-2 border-gray-200 p-4 rounded-xl h-80 overflow-y-auto scroll-area">
+        <div class="bg-gray-50 border-2 border-gray-300 p-4 rounded-xl h-80 overflow-y-auto scroll-area">
           <ul id="payment-list" class="space-y-2"></ul>
         </div>
       </div>
@@ -102,7 +141,7 @@
       <!-- Split Button -->
       <div class="lg:col-span-1 flex items-center justify-center">
         <button id="simplifyBtn"
-          class="btn-hover pulse-glow bg-purple-500 hover:bg-purple-600 text-white px-8 py-6 rounded-2xl font-bold text-xl shadow-2xl">
+          class="btn-hover pulse-glow bg-purple-500 hover:bg-purple-600 text-white px-8 py-6 rounded-2xl font-bold text-sm lg:text-2xl shadow-lg">
           <span class="flex flex-col items-center gap-2">
             <i data-lucide="split"></i>
             Split It!
@@ -117,18 +156,22 @@
           Who Owes Whom
         </h3>
         <div
-          class="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 p-4 rounded-xl h-80 overflow-y-auto scroll-area">
+          class=" from-amber-50 to-yellow-50 border-2 border-amber-300 p-4 rounded-xl h-80 overflow-y-auto scroll-area">
           <ul id="resultArea" class="space-y-2"></ul>
         </div>
       </div>
     </div>
   </div>
-
   <!-- footer -->
-  <footer class="text-center mt-12 text-purple-200">
-    <p class="text-lg font-light">&copy; 2026 Expense Splitter. Made with ❤️ by SenthurvelD</p>
+  <footer class="text-center mt-12 text-purple-100 text-shadow-purple-100 pb-6">
+    <p class="text-lg font-light"><span class="text-purple-100">&copy;</span> 2026 Expense Splitter. Made by
+      <a href="https://github.com/senthurveld" class="text-purple-100 hover:text-purple-300">Senthurvel</a>
+    </p>
   </footer>
-
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 
 </html>
