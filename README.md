@@ -13,4 +13,4 @@
 4. JavaScript Modules, Classes, Functions, Models
 5. Toast API for messages
 
-<p>Thanking you <a href="tapascript.io" target="_blank">@tapaScript</a> for this wonderful initiative to enlighten me</p>
+<p>Thanking you <a href="https://github.com/tapascript" target="_blank">@tapaScript</a> for this wonderful initiative to enlighten me</p>
