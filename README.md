@@ -1,6 +1,6 @@
 # Expense Splitter 
 
-### by wrapping this project finishing up JavaScript fundamentals, some advanced concepts and handie features
+#### By wrapping this project finishing up JavaScript fundamentals, some advanced concepts and handie features
 
 ## Expense Splitter
 
